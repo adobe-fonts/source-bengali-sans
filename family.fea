@@ -1,0 +1,546 @@
+#--------------------------------------
+@VIRAMA = [bnVirama bnRaphala bnBaphala bnYaphala]; # gjRakarU gjRakarUu];
+@BLWM = [@MC_blwmBOTTOM @MC_blwmNUKTA @MC_blwmVOCAL];
+@BLWM_NO_NUKTA = [@MC_blwmBOTTOM @MC_blwmVOCAL];
+#
+@LETTERS_MAJUSCULE_LATIN = [A B C D E F G H I J K L M N O P Q R S T U V W X Y Z AE Lslash Oslash OE Eth Thorn];
+#
+@FIGURES_LINING_TABULAR = [zero one two three four five six seven eight nine bnZero bnOne bnTwo bnThree bnFour bnFive bnSix bnSeven bnEight bnNine rupeeindian];
+@FIGURES_LINING_PROPORTIONAL = [zero.pnum one.pnum two.pnum three.pnum four.pnum five.pnum six.pnum seven.pnum eight.pnum nine.pnum bnZero.pnum bnOne.pnum bnTwo.pnum bnThree.pnum bnFour.pnum bnFive.pnum bnSix.pnum bnSeven.pnum bnEight.pnum bnNine.pnum rupeeindian.pnum];
+#
+@SORTS_DFLT = [exclam question quoteleft quoteright quotedblleft quotedblright asterisk];
+@SORTS_LATN = [exclam.latn question.latn quoteleft.latn quoteright.latn quotedblleft.latn quotedblright.latn asterisk.latn];
+#
+@MARKS_CMB_LAT = [ gravecmb acutecmb circumflexcmb tildecmb dieresiscmb macroncmb brevecmb ringcmb dotaccentcmb caroncmb candrabinducmb];
+@MARKS_CMB_LAT_CASE = [ gravecmb.cap acutecmb.cap circumflexcmb.cap tildecmb.cap dieresiscmb.cap macroncmb.cap brevecmb.cap ringcmb.cap dotaccentcmb.cap caroncmb.cap candrabinducmb.cap];
+
+#--------------------------------------
+#lookup DECOMP {
+#	sub bnRa by bnBa bnNukta;
+#	sub bnRra by bnDda bnNukta;
+#	sub bnRha by bnDdha bnNukta;
+#	sub bnYya by bnYa bnNukta;
+#} DECOMP;
+
+feature ccmp {
+
+lookup COMPOSE {
+	sub G macronbelowcmb H macronbelowcmb by GHmacronbelow;
+	sub G macrondoublebelowcmb H by GHmacronbelow;
+	sub G macronbelowcmb h macronbelowcmb by Ghmacronbelow;
+	sub G macronbelowcmb hlinebelow by Ghmacronbelow;
+	sub G macrondoublebelowcmb h by Ghmacronbelow;
+	sub g macronbelowcmb h macronbelowcmb by ghmacronbelow;
+	sub g macronbelowcmb hlinebelow by ghmacronbelow;
+	sub g macrondoublebelowcmb h by ghmacronbelow;
+	sub K macronbelowcmb H macronbelowcmb by KHmacronbelow;
+	sub Klinebelow H macronbelowcmb by KHmacronbelow;
+	sub K macrondoublebelowcmb H by KHmacronbelow;
+	sub K macronbelowcmb h macronbelowcmb by Khmacronbelow;
+	sub Klinebelow hlinebelow by Khmacronbelow;
+	sub K macrondoublebelowcmb h by Khmacronbelow;
+	sub k macronbelowcmb h macronbelowcmb by khmacronbelow;
+	sub klinebelow hlinebelow by khmacronbelow;
+	sub k macrondoublebelowcmb h by khmacronbelow;
+} COMPOSE; 
+
+lookup MAJUCSULE_ACCENTS_CMB_CONTEXT { # substitutes combining marks for miniscules with forms for majuscules
+	sub @LETTERS_MAJUSCULE_LATIN @MARKS_CMB_LAT' by @MARKS_CMB_LAT_CASE;
+} MAJUCSULE_ACCENTS_CMB_CONTEXT;
+
+#lookup DECOMP_CXT {
+#	sub [bnRa bnRra bnRha bnYya]' lookup DECOMP @BLWM_NO_NUKTA;
+#} DECOMP_CXT;
+
+} ccmp;
+
+#--------------------------------------
+feature locl { # Localized Forms
+	script latn;
+		language dflt;
+			sub @SORTS_DFLT by @SORTS_LATN;
+#	script bng2;
+#		language BEN exclude_dflt;
+#			lookup RA_BEN {
+#			sub bnRa.ASM by bnRa;
+#			} RA_BEN;
+#	script bng2;
+#		language ASM exclude_dflt;
+#			lookup RA_ASM {
+#			sub bnRa by bnRa.ASM;
+#			} RA_ASM;
+#	script bng2;
+#		language MNI exclude_dflt;
+#			lookup RA_BEN;
+#	script beng;
+#		language BEN exclude_dflt;
+#			lookup RA_BEN;
+#	script beng;
+#		language ASM exclude_dflt;
+#			lookup RA_ASM;
+#	script beng;
+#		language MNI exclude_dflt;
+#			lookup RA_BEN;
+} locl;
+
+
+#--------------------------------------
+feature nukt { # Nukta Forms
+	sub bnDda bnNukta by bnRra;
+	sub bnDdha bnNukta by bnRha;
+	sub bnYa bnNukta by bnYya;
+} nukt;
+
+
+#--------------------------------------
+feature akhn { # Akhands
+#	script bng2;
+#		language dflt;
+#			lookup AKHANDS {
+				sub bnKa bnVirama bnSsa by bnKSsa;
+#			} AKHANDS;
+#			lookup YAPHALAS_NEW {
+#				sub bnKha bnVirama bnYa by bnKhYa; 
+#				sub bnGa bnVirama bnYa by bnGYa; 
+#				sub bnSha bnVirama bnYa by bnShYa; 
+#				sub bnSsa bnVirama bnYa by bnSsYa; 
+#				sub bnSa bnVirama bnYa by bnSYa; 
+#			} YAPHALAS_NEW;
+#
+#	script beng;
+#		language dflt;
+#			lookup AKHANDS;
+#			lookup YAPHALAS_OLD {
+#				sub bnKha bnYa bnVirama by bnKhYa; 
+#				sub bnGa bnYa bnVirama by bnGYa; 
+#				sub bnSha bnYa bnVirama by bnShYa; 
+#				sub bnSsa bnYa bnVirama by bnSsYa; 
+#				sub bnSa bnYa bnVirama by bnSYa; 
+#			} YAPHALAS_OLD;
+} akhn;
+
+
+#--------------------------------------
+feature rphf { # Reph
+lookupflag MarkAttachmentType @VIRAMA;
+
+	sub bnRa bnVirama by bnReph;
+
+} rphf;
+
+
+#--------------------------------------
+feature blwf { # Below-Base Forms
+
+	script bng2;
+		language dflt;
+			lookup blwf_bng2 {
+				sub bnVirama bnBa by bnBaphala;
+				sub bnVirama [bnRa.ASM bnRa] by bnRaphala;
+			} blwf_bng2;
+		language BEN include_dflt;
+		language ASM include_dflt;
+		language MNI include_dflt;
+
+	script beng;
+		language dflt;
+			lookup blwf_beng {
+				sub bnBa bnVirama by bnBaphala;
+				sub [bnRa.ASM bnRa] bnVirama by bnRaphala;
+			} blwf_beng;
+		language BEN include_dflt;
+		language ASM include_dflt;
+		language MNI include_dflt;
+
+} blwf;
+
+
+#--------------------------------------
+feature pstf { # Post-Base Forms
+
+lookup pstf_bng2 {
+	script bng2;
+	language dflt;
+	sub bnVirama [bnYa bnYya] by bnYaphala;
+} pstf_bng2;
+
+lookup pstf_beng {
+	script beng;
+	language dflt;
+	sub [bnYa bnYya] bnVirama by bnYaphala;
+} pstf_beng;
+
+} pstf;
+
+
+#--------------------------------------
+feature cjct { # Conjuncts
+#
+	sub bnNa bnVirama bnKa bnVirama bnTa by bnNKTa; 
+	sub bnSa bnVirama bnPa bnVirama bnLa by bnSPLa; 
+
+	sub bnKa bnVirama bnKa by bnKKa;
+	sub bnKa bnVirama bnTta by bnKTta;
+	sub bnKa bnVirama bnTa by bnKTa;
+	sub bnKa bnVirama bnNa by bnKNa;
+	sub bnKa bnVirama bnMa by bnKMa;
+	sub bnKa bnVirama bnLa by bnKLa;
+	sub bnKSsa bnVirama bnNa by bnKSsNa;
+	sub bnKSsa bnVirama bnMa by bnKSsMa;
+	sub bnKa bnVirama bnSa by bnKSa;
+	sub bnGa bnVirama bnGa by bnGGa;
+	sub bnGa bnVirama bnDa by bnGDa;
+	sub bnGa bnVirama bnDha by bnGDha;
+	sub bnGa bnVirama bnNa by bnGNa;
+	sub bnGa bnVirama bnMa by bnGMa;
+	sub bnGa bnVirama bnLa by bnGLa;
+	sub bnGha bnVirama bnNa by bnGhNa;
+	sub bnNga bnVirama bnKa by bnNgKa;
+	sub bnNga bnVirama bnKSsa by bnNgKSsa; 
+	sub bnNga bnVirama bnKha by bnNgKha; 
+	sub bnNga bnVirama bnGa by bnNgGa; 
+	sub bnNga bnVirama bnGha by bnNgGha; 
+	sub bnNga bnVirama bnMa by bnNgMa; 
+	sub bnCa bnVirama bnCa by bnCCa; 
+	sub bnCa bnVirama bnCha by bnCCha; 
+	sub bnCa bnVirama bnNya by bnCNya; 
+	sub bnJa bnVirama bnJa by bnJJa; 
+	sub bnJa bnVirama bnJha by bnJJha; 
+	sub bnJa bnVirama bnNya by bnJNya; 
+	sub bnNya bnVirama bnCa by bnNyCa; 
+	sub bnNya bnVirama bnCha by bnNyCha; 
+	sub bnNya bnVirama bnJa by bnNyJa; 
+	sub bnNya bnVirama bnJha by bnNyJha; 
+	sub bnTta bnVirama bnTta by bnTtTta; 
+	sub bnDda bnVirama bnDda by bnDdDda; 
+	sub bnNna bnVirama bnTta by bnNnTta; 
+	sub bnNna bnVirama bnTtha by bnNnTtha; 
+	sub bnNna bnVirama bnDda by bnNnDda; 
+	sub bnNna bnVirama bnDdha by bnNnDdha; 
+	sub bnNna bnVirama bnNna by bnNnNna; 
+	sub bnNna bnVirama bnMa by bnNnMa; 
+	sub bnTa bnVirama bnTa by bnTTa; 
+	sub bnTa bnVirama bnTha by bnTTha; 
+	sub bnTa bnVirama bnNa by bnTNa; 
+	sub bnTa bnVirama bnMa by bnTMa; 
+	sub bnTha bnVirama bnLa by bnThLa; 
+	sub bnDa bnVirama bnGa by bnDGa; 
+	sub bnDa bnVirama bnGha by bnDGha; 
+	sub bnDa bnVirama bnDa by bnDDa; 
+	sub bnDa bnVirama bnDha by bnDDha; 
+	sub bnDa bnVirama bnNa by bnDNa; 
+	sub bnDa bnVirama bnBha by bnDBha; 
+	sub bnDa bnVirama bnMa by bnDMa; 
+	sub bnDha bnVirama bnNa by bnDhNa; 
+	sub bnNa bnVirama bnJa by bnNJa; 
+	sub bnNa bnVirama bnTta by bnNTta; 
+	sub bnNa bnVirama bnTtha by bnNTtha; 
+	sub bnNa bnVirama bnDda by bnNDda;
+	sub bnNa bnVirama bnTa by bnNTa; 
+	sub bnNa bnVirama bnTha by bnNTha; 
+	sub bnNa bnVirama bnDa by bnNDa; 
+	sub bnNa bnVirama bnDha by bnNDha; 
+	sub bnNa bnVirama bnNa by bnNNa; 
+	sub bnNa bnVirama bnMa by bnNMa; 
+	sub bnNa bnVirama bnSa by bnNSa; 
+	sub bnPa bnVirama bnTta by bnPTta; 
+	sub bnPa bnVirama bnTa by bnPTa; 
+	sub bnPa bnVirama bnNa by bnPNa; 
+	sub bnPa bnVirama bnPa by bnPPa; 
+	sub bnPa bnVirama bnLa by bnPLa; 
+	sub bnPa bnVirama bnSa by bnPSa; 
+	sub bnPha bnVirama bnTta by bnPhTta; 
+	sub bnPha bnVirama bnLa by bnPhLa; 
+	sub bnBa bnVirama bnJa by bnBJa; 
+	sub bnBa bnVirama bnDa by bnBDa; 
+	sub bnBa bnVirama bnDha by bnBDha; 
+	sub bnBa bnVirama bnBha by bnBBha; 
+	sub bnBa bnVirama bnLa by bnBLa; 
+	sub bnBha bnVirama bnLa by bnBhLa; 
+	sub bnMa bnVirama bnNa by bnMNa; 
+	sub bnMa bnVirama bnPa by bnMPa; 
+	sub bnMa bnVirama bnPha by bnMPha; 
+	sub bnMa bnVirama bnBa by bnMBa; 
+	sub bnMa bnVirama bnBha by bnMBha; 
+	sub bnMa bnVirama bnMa by bnMMa; 
+	sub bnMa bnVirama bnLa by bnMLa; 
+	sub bnLa bnVirama bnKa by bnLKa; 
+	sub bnLa bnVirama bnGa by bnLGa; 
+	sub bnLa bnVirama bnTta by bnLTta; 
+	sub bnLa bnVirama bnDda by bnLDda; 
+	sub bnLa bnVirama bnDa by bnLDa; 
+	sub bnLa bnVirama bnPa by bnLPa; 
+	sub bnLa bnVirama bnPha by bnLPha; 
+	sub bnLa bnVirama bnMa by bnLMa; 
+	sub bnLa bnVirama bnLa by bnLLa; 
+	sub bnLa bnVirama bnSa by bnLSa; 
+	sub bnSha bnVirama bnCa by bnShCa; 
+	sub bnSha bnVirama bnCha by bnShCha; 
+	sub bnSha bnVirama bnTta by bnShTta; 
+	sub bnSha bnVirama bnNa by bnShNa; 
+	sub bnSha bnVirama bnMa by bnShMa; 
+	sub bnSha bnVirama bnLa by bnShLa; 
+	sub bnSsa bnVirama bnKa by bnSsKa; 
+	sub bnSsa bnVirama bnTta by bnSsTta; 
+	sub bnSsa bnVirama bnTtha by bnSsTtha; 
+	sub bnSsa bnVirama bnNna by bnSsNna; 
+	sub bnSsa bnVirama bnPa by bnSsPa; 
+	sub bnSsa bnVirama bnPha by bnSsPha; 
+	sub bnSsa bnVirama bnMa by bnSsMa; 
+	sub bnSa bnVirama bnKa by bnSKa; 
+	sub bnSa bnVirama bnKha by bnSKha; 
+	sub bnSa bnVirama bnTta by bnSTta; 
+	sub bnSa bnVirama bnTha by bnSTha; 
+	sub bnSa bnVirama bnTa by bnSTa; 
+	sub bnSa bnVirama bnNa by bnSNa; 
+	sub bnSa bnVirama bnPa by bnSPa; 
+	sub bnSa bnVirama bnPha by bnSPha; 
+	sub bnSa bnVirama bnMa by bnSMa; 
+#	sub bnSa bnVirama bnYa by bnSYa; 
+	sub bnSa bnVirama bnLa by bnSLa;
+	sub bnHa bnVirama bnNna by bnHNna; 
+	sub bnHa bnVirama bnNa by bnHNa; 
+	sub bnHa bnVirama bnMa by bnHMa; 
+	sub bnHa bnVirama bnLa by bnHLa; 
+	sub bnHa bnVirama bnYya by bnHYya; 
+	sub bnRra bnVirama bnGa by bnRrGa; 
+
+} cjct;
+
+
+#--------------------------------------
+feature init { # Initial Forms
+
+	sub [bnEsign bnAisign] by [bnEsign.i bnAisign.i];
+
+} init;
+
+
+#--------------------------------------
+#feature pres { # Pre-base Substitutions
+# NOTE: This substitution must be written to match 
+# the glyph sequence after the reordering of the 
+# underlying characters has occurred.
+
+#	sub bnIsign' @CONSONANTS_FEW @ADDAK by bnIsign.a;
+#	sub bnIsign' [bnTtha bnNa] bnTippi by bnIsign.a;
+
+#} pres;
+
+
+#--------------------------------------
+#feature abvs { # Above-Base Substitutions
+#	sub bnIisign bnReph by bnIisignReph;
+#	sub bnAulength bnReph by bnAulengthReph;
+#} abvs;
+
+
+#--------------------------------------
+feature blws { # Below-Base Substitutions
+
+lookup RAPHALAS {
+	sub bnKTta bnRaphala by bnKTtRa;
+	sub bnKTa bnBaphala by bnKTBa;
+	sub bnKTa bnRaphala by bnKTRa;
+	sub bnSTa bnBaphala by bnSTBa;
+	sub bnKa bnBaphala by bnKBa;
+	sub bnKa bnRaphala by bnKRa;
+	sub bnKSsa bnBaphala by bnKSsBa; 
+	sub bnKSsa bnRaphala by bnKSsRa; 
+	sub bnKha bnBaphala by bnKhBa; 
+	sub bnKha bnRaphala by bnKhRa;
+	sub bnGDha bnBaphala by bnGDhBa; 
+	sub bnGDha bnRaphala by bnGDhRa; 
+	sub bnGa bnBaphala by bnGBa;
+	sub bnGa bnRaphala by bnGRa;
+	sub bnGha bnBaphala by bnGhBa; 
+	sub bnGha bnRaphala by bnGhRa;
+	sub bnNgKa bnRaphala by bnNgKRa; 
+	sub bnNgKSsa bnRaphala by bnNgKSsRa;
+	sub bnNgGa bnRaphala by bnNgGRa; 
+	sub bnNgGha bnRaphala by bnNgGhRa; 
+	sub bnNga bnRaphala by bnNgRa;
+	sub bnCCha bnBaphala by bnCChBa; 
+	sub bnCCha bnRaphala by bnCChRa; 
+	sub bnCa bnRaphala by bnCRa; 
+	sub bnCha bnRaphala by bnChRa; 
+	sub bnJJa bnBaphala by bnJJBa; 
+	sub bnJa bnBaphala by bnJBa; 
+	sub bnJa bnRaphala by bnJRa;
+	sub bnJha bnRaphala by bnJhRa; 
+	sub bnNya bnRaphala by bnNyRa; 
+	sub bnTta bnBaphala by bnTtBa; 
+	sub bnTta bnRaphala by bnTtRa;
+	sub bnTtha bnRaphala by bnTthRa; 
+	sub bnDda bnRaphala by bnDdRa;
+	sub bnDdha bnRaphala by bnDdhRa; 
+	sub bnNnDda bnRaphala by bnNnDdRa; 
+	sub bnNna bnBaphala by bnNnBa; 
+	sub bnNna bnRaphala by bnNnRa; 
+	sub bnTTa bnBaphala by bnTTBa; 
+	sub bnTTa bnRaphala by bnTTRa; 
+	sub bnTa bnBaphala by bnTBa;
+	sub bnTa bnRaphala by bnTRa;
+	sub bnTha bnBaphala by bnThBa; 
+	sub bnTha bnRaphala by bnThRa;
+	sub bnDDa bnBaphala by bnDDBa; 
+	sub bnDBha bnRaphala by bnDBhRa; 
+	sub bnDDha bnBaphala by bnDDhBa; 
+	sub bnDa bnBaphala by bnDBa; 
+	sub bnDa bnRaphala by bnDRa;
+	sub bnDha bnBaphala by bnDhBa; 
+	sub bnDha bnRaphala by bnDhRa;
+	sub bnNTta bnRaphala by bnNTtRa; 
+	sub bnNTa bnBaphala by bnNTBa; 
+	sub bnNTa bnRaphala by bnNTRa; 
+	sub bnNDa bnBaphala by bnNDBa; 
+	sub bnNDa bnRaphala by bnNDRa; 
+	sub bnNDha bnBaphala by bnNDhBa; 
+	sub bnNDha bnRaphala by bnNDhRa; 
+	sub bnNa bnBaphala by bnNBa; 
+	sub bnNa bnRaphala by bnNRa;
+	sub bnNDda bnRaphala by bnNDdRa;
+	sub bnPa bnRaphala by bnPRa;
+	sub bnPTa bnRaphala by bnPTRa;
+	sub bnPha bnRaphala by bnPhRa;
+	sub bnBa bnBaphala by bnBBa; 
+	sub bnBa bnRaphala by bnBRa;
+	sub bnBha bnRaphala by bnBhRa;
+	sub bnMPa bnRaphala by bnMPRa; 
+	sub bnMBha bnRaphala by bnMBhRa; 
+	sub bnMa bnBaphala by bnMBa;
+	sub bnMa bnRaphala by bnMRa;
+	sub bnYa bnRaphala by bnYRa; 
+	sub bnLa bnBaphala by bnLBa; 
+	sub bnLa bnRaphala by bnLRa;
+	sub bnSha bnBaphala by bnShBa; 
+	sub bnSha bnRaphala by bnShRa;
+	sub bnSKa bnRaphala by bnSKRa; 
+	sub bnSTa bnRaphala by bnSTRa; 
+	sub bnSPa bnRaphala by bnSPRa; 
+	sub bnSsKa bnRaphala by bnSsKRa; 
+	sub bnSsTta bnRaphala by bnSsTtRa; 
+	sub bnSsPa bnRaphala by bnSsPRa; 
+	sub bnSsa bnBaphala by bnSsBa; 
+	sub bnSsa bnRaphala by bnSsRa; 
+	sub bnSKa bnBaphala by bnSKBa; 
+	sub bnSTta bnRaphala by bnSTtRa; 
+	sub bnSa bnBaphala by bnSBa; 
+	sub bnSa bnRaphala by bnSRa;
+	sub bnHa bnBaphala by bnHBa; 
+	sub bnHa bnRaphala by bnHRa;
+#	sub bnTa bnRaphala by bnTRa.a;
+
+} RAPHALAS;
+
+lookup CV_LIGS {
+	sub bnGa bnUsign by bnGU;
+	sub bnGRa bnUsign by bnGRU;
+	sub bnGRa bnUusign by bnGRUu;
+	sub bnTRa bnUsign by bnTRU;
+	sub bnTRa bnUusign by bnTRUu;
+	sub bnThRa bnUsign by bnThRU;
+	sub bnThRa bnUusign by bnThRUu;
+	sub bnDRa bnUsign by bnDRU;
+	sub bnDRa bnUusign by bnDRUu;
+	sub bnDhRa bnUsign by bnDhRU;
+	sub bnDhRa bnUusign by bnDhRUu;
+	sub bnPRa bnUsign by bnPRU;
+	sub bnPRa bnUusign by bnPRUu;
+	sub bnBRa bnUsign by bnBRU;
+	sub bnBRa bnUusign by bnBRUu;
+	sub bnBhRa bnUsign by bnBhRU;
+	sub bnBhRa bnUusign by bnBhRUu;
+	sub bnRa bnUsign by bnRU;
+	sub bnRa bnUusign by bnRUu;
+	sub bnLGa bnUsign by bnLGU;
+	sub bnShRa bnUsign by bnShRU;
+	sub bnShRa bnUusign by bnShRUu;
+	sub bnSha bnUsign by bnShU;
+	sub bnSTa bnUsign by bnSTU;
+	sub bnSRa bnUsign by bnSRU;
+	sub bnSRa bnUusign by bnSRUu;
+	sub bnHa bnUsign by bnHU;
+	sub bnHa bnRvocalsign by bnHRvocal;
+	sub bnRa.ASM bnUsign by bnRU.ASM;
+	sub bnRa.ASM bnUusign by bnRUu.ASM;
+	sub bnVa bnUsign by bnVU;
+	sub bnVa bnUusign by bnVUu;
+} CV_LIGS;
+
+} blws;
+
+
+#--------------------------------------
+feature psts { # Post-base Substitutions
+#	sub bnKha bnYaphala by bnKhYa; 
+#	sub bnGa bnYaphala by bnGYa; 
+#	sub bnSha bnYaphala by bnShYa; 
+#	sub bnSsa bnYaphala by bnSsYa; 
+#	sub bnSa bnYaphala by bnSYa; 
+	sub bnHa bnYaphala by bnHYya;
+
+lookup IKARS {
+	include (ikars.fea)
+} IKARS;
+
+lookup IIKARS {
+	sub [bnTtha bnTthRa bnNnTtha bnNTtha bnPTa bnBBha bnSsTtha] bnIisign' by bnIisign.a;
+	sub [bnTta bnTtTta bnTtBa bnTtRa bnSsTta bnSsTtRa bnSTta bnSTtRa] bnIisign' by bnIisign.d;
+	sub [bnKTta bnKTtRa bnNnTta bnNTta bnNTtRa bnPTta bnPhTta bnLTta bnShTta] bnIisign' by bnIisign.e;
+} IIKARS;
+
+} psts;
+
+
+#--------------------------------------
+# feature calt {
+# 	lookup HEADLINE_1_CXT;
+#} calt;
+
+#--------------------------------------
+feature pnum { # Proportional Figures
+	sub @FIGURES_LINING_TABULAR by @FIGURES_LINING_PROPORTIONAL;
+} pnum;
+
+#--------------------------------------
+feature liga {
+	sub f f b by f_f_b;
+	sub f f h by f_f_h;
+	sub f f i by f_f_i;
+	sub f f j by f_f_j;
+	sub f f k by f_f_k;
+	sub f f l by f_f_l;
+	sub f f t by f_f_t;
+	sub T h by T_h;
+	sub f b by f_b;
+	sub f f by f_f;
+	sub f h by f_h;
+	sub f i by f_i;
+	sub f j by f_j;
+	sub f k by f_k;
+	sub f l by f_l;
+	sub f t by f_t;
+} liga;
+
+#--------------------------------------
+feature ss01 {
+	sub bnKRa by bnKRa.a;
+	sub bnTRa by bnTRa.a;
+	sub bnNnDda by bnNnDda.a;
+} ss01;
+#
+#--------------------------------------
+feature ss02 {
+lookup UKAR_ALTS {
+@RAPHALA_U_FORMS = [bnRa bnRa.ASM bnVa bnKhRa bnGRa bnGhRa bnNgGhRa bnNnRa bnThRa bnDhRa bnPRa bnBRa bnMPRa bnYRa bnLRa bnShRa bnSsPRa bnSsRa bnSPRa];
+	sub @RAPHALA_U_FORMS bnUsign' by bnUsign.a;
+	sub @RAPHALA_U_FORMS bnUusign' by bnUusign.a;
+} UKAR_ALTS;
+} ss02;
+
+#--------------------------------------
+feature size {
+	parameters 11.0 0; # design size, subfamily
+} size;
+
